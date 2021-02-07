@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/bj/CLionProjects/376-edit-distance-starter/memo_starter.cpp
+iostream
+-
+fstream
+-
+string
+-
+vector
+-
+algorithm
+-
+chrono
+-
+
