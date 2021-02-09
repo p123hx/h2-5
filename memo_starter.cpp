@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <chrono>
 #define EMPTY_COST -1
 using namespace std::chrono;
 using namespace std;
@@ -21,28 +20,33 @@ int main(int argc, char **argv) {
         int len1 = std::stoi(argv[1]), len2 = len1;
         if (argc > 2) len2 = std::stoi(argv[2]);
         char cstr1[len1 + 1], cstr2[len2 + 1];
-        std::ifstream("macbeth.txt").read(cstr1, len1);
-        std::ifstream("hamilton.txt").read(cstr2, len2);
+        std::ifstream("../macbeth.txt").read(cstr1, len1);
+        std::ifstream("../hamilton.txt").read(cstr2, len2);
         cstr1[len1] = cstr2[len2] = '\0';
         str1 = std::string(cstr1);
         str2 = std::string(cstr2);
     }
-
     for (int j = 0; j < 100; j++)
         edit_distance(str1, str2);
+
 //    chrono::high_resolution_clock::time_point t0, t1;
-//    for (int i = 100000; i < 1000000; i += 100000) {
+//    for (int i = 10000; i < 100000; i += 10000) {
 //        int len1 = i, len2 = i;
 //        char cstr1[len1 + 1], cstr2[len2 + 1];
-//        std::ifstream("macbeth.txt").read(cstr1, len1);
-//        std::ifstream("hamilton.txt").read(cstr2, len2);
+//        std::ifstream("../macbeth.txt").read(cstr1, len1);
+//        std::ifstream("../hamilton.txt").read(cstr2, len2);
 //        cstr1[len1] = cstr2[len2] = '\0';
 //        str1 = std::string(cstr1);
 //        str2 = std::string(cstr2);
+//        printf("%s\n",str1.c_str());
 //        memo = std::vector<std::vector<int> >(str1.length() + 1,std::vector<int>(str2.length() + 1,EMPTY_COST));
 //        t0 = high_resolution_clock::now();
-//        for (int j = 0; j < 100; j++)
-//            edit_distance(str1, str2);
+//        for (int j = 0; j < 100; j++){
+//            int t = edit_distance(str1, str2);
+//            printf("%d\n",t);
+//        }
+//
+//
 //        t1 = high_resolution_clock::now();
 //        std::chrono::duration<double, std::milli> d = (t1 - t0);
 //        double t = d.count()/100;
@@ -69,12 +73,12 @@ int edit_distance(std::string s1, std::string s2) {
     if (s1.back() == s2.back()) return memo[a - 1][b - 1] = edit_distance(rem_last(s1), rem_last(s2));
 
 
-    return memo[a - 1][b - 1] = 1 + std::min({
+    return memo[a - 1][b - 1] = std::min({
                                                      // TODO: Replace <EMPTY_COST>s with something meaningful
                                                      edit_distance(rem_last(s1),
-                                                                   rem_last(s2)),
+                                                                   rem_last(s2))+3,
                                                      edit_distance
-                                                             (s1, rem_last(s2)),
-                                                     edit_distance(rem_last(s1), s2)
+                                                             (s1, rem_last(s2))+2,
+                                                     edit_distance(rem_last(s1), s2)+2
                                              });
 }
